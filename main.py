@@ -5,10 +5,7 @@ from linebot.models import (
     MessageEvent, TextMessage, TextSendMessage, ImageMessage, ImageSendMessage
 )
 import os
-
-import auth_photo_api
-import get_photo as gp
-
+import get_keyword_photo as gtk
 
 app = Flask(__name__)
 #環境変数取得
@@ -18,7 +15,6 @@ YOUR_CHANNEL_SECRET = os.environ["YOUR_CHANNEL_SECRET"]
 
 line_bot_api = LineBotApi(YOUR_CHANNEL_ACCESS_TOKEN)
 handler = WebhookHandler(YOUR_CHANNEL_SECRET)
-
 
 ## 1 ##
 #Webhookからのリクエストをチェックします。
@@ -53,10 +49,11 @@ def callback():
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-    auth_photo_api.photo_user_auth()
-    auth_photo_api.photo_get_service()
-    word = event.message.text
-    show_img_url = gp.get_photo_url(word)
+    key_word = event.message.text
+    auth = gtk.photo_user_auth()
+    get_service = gtk.photo_get_service()
+    show_img_url = gtk.get_photo_url(key_word)
+
     line_bot_api.reply_message(
         event.reply_token,
         TextSendMessage(body=show_img_url)) #ここでオウム返しのメッセージを返します。

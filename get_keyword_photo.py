@@ -10,6 +10,8 @@ from io import BytesIO
 from PIL import Image, ImageOps
 import requests
 
+
+
 SCOPES = "https://www.googleapis.com/auth/photoslibrary"
 
 CLIENT_SECRET_FILE_PATH = "client_id(3)_Pht.json"

@@ -10,7 +10,7 @@ from linebot.models import (
     MessageEvent, TextMessage, TextSendMessage,
 )
 import os
-import get_keyword_photo as gkp
+#import get_keyword_photo as gkp
  
 app = Flask(__name__)
  

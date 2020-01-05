@@ -61,7 +61,7 @@ def handle_message(event):
     show_img_url = gkp.get_photo_url(keyword)
     line_bot_api.reply_message(
         event.reply_token,
-        TextSendMessage(text=event.message.text))#ここでオウム返しのメッセージを返します。
+        TextSendMessage(text=show_img_url))#ここでオウム返しのメッセージを返します。
  
 # ポート番号の設定
 if __name__ == "__main__":

@@ -9,35 +9,24 @@ import random
 from io import BytesIO
 from PIL import Image, ImageOps
 import requests
-
+import json
 
 
 SCOPES = "https://www.googleapis.com/auth/photoslibrary"
 
 CLIENT_SECRET_FILE_PATH = "client_id(3)_Pht.json"
 
-USER_SECRET_FILE_PATH = 'credentials-photoslibrary.json'
+USER_SECRET_FILE_PATH = os.environ["CREDIT"]
 
 flags = argparse.ArgumentParser(parents=[tools.argparser]).parse_args()
 
 def photo_user_auth():
-    store = Storage(USER_SECRET_FILE_PATH)
-    creditials = store.get()
-
-    if not creditials or creditials.invalid:
-        flow = client.flow_from_clientsecrets(CLIENT_SECRET_FILE_PATH, SCOPES)
-        flow.user_agent = "photolibrary"
-        creditials = tools.run_flow(flow, store, flags)
-        print("認証結果を保存しました:" + USER_SECRET_FILE_PATH)
-    return creditials
-
-def photo_get_service():
-    creditials = photo_user_auth()
-    http = creditials.authorize(httplib2.Http())
+    CREDS = client.Credentials.new_from_json(USER_SECRET_FILE_PATH)
+    http = CREDS.authorize(httplib2.Http())
     service = discovery.build("photoslibrary", "v1", http=http)
     return service
 
-service = photo_get_service()
+service = photo_user_auth()
 
 nextPageToken = ""
 get_album_list = service.albums().list(pageSize=10, pageToken=nextPageToken).execute()

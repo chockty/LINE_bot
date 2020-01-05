@@ -6,8 +6,8 @@ from oauth2client import tools
 from oauth2client.file import Storage
 import argparse
 import random
-from io import BytesIO
-from PIL import Image, ImageOps
+#from io import BytesIO
+#from PIL import Image, ImageOps
 import requests
 import json
 

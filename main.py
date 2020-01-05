@@ -7,7 +7,7 @@ from linebot.exceptions import (
     InvalidSignatureError
 )
 from linebot.models import (
-    MessageEvent, TextMessage, TextSendMessage,
+    MessageEvent, TextMessage, TextSendMessage, ImageMessage, ImageSendMessage
 )
 import os
 import get_keyword_photo as gkp
@@ -61,7 +61,7 @@ def handle_message(event):
     show_img_url = gkp.get_photo_url(keyword)
     line_bot_api.reply_message(
         event.reply_token,
-        TextSendMessage(text=show_img_url))#ここでオウム返しのメッセージを返します。
+        ImageSendMessage(original_content_url=show_img_url,preview_image_url=show_img_url))#ここでオウム返しのメッセージを返します。
  
 # ポート番号の設定
 if __name__ == "__main__":

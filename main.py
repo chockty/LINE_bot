@@ -11,6 +11,8 @@ from linebot.models import (
 )
 import os
 import get_keyword_photo as gkp
+import get_schedules as gs
+import random
  
 app = Flask(__name__)
  
@@ -53,15 +55,28 @@ def callback():
 #def以下の関数を実行します。
 #reply_messageの第一引数のevent.reply_tokenは、イベントの応答に用いるトークンです。 
 #第二引数には、linebot.modelsに定義されている返信用のTextSendMessageオブジェクトを渡しています。
- 
+
+KeyErrorlist = ["カメコに写真もらおうか","shortage of photos","出直せ","ライブ行っとけ"]
+
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-    keyword = event.message.text
-    auth = gkp.photo_user_auth()
-    show_img_url = gkp.get_photo_url(keyword)
-    line_bot_api.reply_message(
+    key_word = event.message.text
+    if key_word == "スケジュール" or "いつ？":
+        scriping = gs.scriping()
+        event_info = gs.get_schedules(scriping)
+        line_bot_api.reply_message(
         event.reply_token,
-        ImageSendMessage(original_content_url=show_img_url,preview_image_url=show_img_url))#ここでオウム返しのメッセージを返します。
+        TextSendMessage(text=event_info))
+    else:
+        auth = gkp.photo_user_auth()
+        show_img_url = gkp.get_photo_url(key_word)
+        if not show_img_url:
+            error_object = random.choice(KeyErrorlist)
+            print(error_object)
+        else:
+            line_bot_api.reply_message(
+                event.reply_token,
+                ImageSendMessage(original_content_url=show_img_url,preview_image_url=show_img_url))
  
 # ポート番号の設定
 if __name__ == "__main__":

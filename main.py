@@ -66,7 +66,7 @@ def handle_message(event):
         event_info = gs.get_schedules(scriping)
         line_bot_api.reply_message(
         event.reply_token,
-        TextSendMessage(text=event_info))
+        TextSendMessage(text=event_info[1]))
 #    else:
 #        auth = gkp.photo_user_auth()
 #        show_img_url = gkp.get_photo_url(key_word)

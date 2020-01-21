@@ -58,6 +58,7 @@ def callback():
 
 KeyErrorlist = ["カメコに写真もらおうか","shortage of photos","出直せ","ライブ行っとけ"]
 
+#Success
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
     key_word = event.message.text
@@ -67,17 +68,17 @@ def handle_message(event):
         line_bot_api.reply_message(
             event.reply_token,TextSendMessage(text=event_info))
 
-#        for num in range(0,len(event_info),2):
-#    else:
-#        auth = gkp.photo_user_auth()
-#        show_img_url = gkp.get_photo_url(key_word)
-#        if not show_img_url:
-#            error_object = random.choice(KeyErrorlist)
-#            print(error_object)
-#        else:
-#            line_bot_api.reply_message(
-#                event.reply_token,
-#                ImageSendMessage(original_content_url=show_img_url,preview_image_url=show_img_url))
+    else:
+        auth = gkp.photo_user_auth()
+        show_img_url = gkp.get_photo_url(key_word)
+        if not show_img_url:
+            error_object = random.choice(KeyErrorlist)
+            line_bot_api.reply_message(
+            event.reply_token,TextSendMessage(text=error_object))
+        else:
+            line_bot_api.reply_message(
+                event.reply_token,
+                ImageSendMessage(original_content_url=show_img_url,preview_image_url=show_img_url))
  
 # ポート番号の設定
 if __name__ == "__main__":

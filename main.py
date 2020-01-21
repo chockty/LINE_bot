@@ -60,13 +60,14 @@ KeyErrorlist = ["カメコに写真もらおうか","shortage of photos","出直
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-    #key_word = event.message.text
-    #if key_word == "スケジュール" or "いつ？":
-    #    scriping = gs.scriping()
-    #    event_info = gs.get_schedules(scriping)
-    line_bot_api.reply_message(
-        event.reply_token,
-        TextSendMessage(text=event.message.text))
+    key_word = event.message.text
+    if key_word == "スケジュール" or "いつ？":
+        scriping = gs.scriping()
+        event_info = gs.get_schedules(scriping)
+        for a_event in event_info:
+            line_bot_api.reply_message(
+                event.reply_token,
+                TextSendMessage(text=a_event.text))
 #    else:
 #        auth = gkp.photo_user_auth()
 #        show_img_url = gkp.get_photo_url(key_word)

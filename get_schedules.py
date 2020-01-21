@@ -9,17 +9,10 @@ def scriping():
 
 def get_schedules(get_schedule):
     event_list = []
-    show_event_list = []
     for event in get_schedule:
         for a in event.select("a"):
             href = a.attrs["href"]
-            detail = a.getText()
-            SCH = href,detail
-            event_list.append(SCH)
-    for num in range(0, len(event_list)):
-        if "\n" in event_list[num]:
-            event_list[num] = event_list[num].replace("\n","")
-    for num in range(0, len(event_list),2):
-        show_event_list.append(event_list[num])
-        show_event_list.append(event_list[num+1])
-    return show_event_list
+            event_list.append(a.getText())
+            event_list.append(href)
+    event_info = "\n".join(event_list)
+    return event_info

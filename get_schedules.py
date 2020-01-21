@@ -13,6 +13,6 @@ def get_schedules(get_schedule):
         for a in event.select("a"):
             href = a.attrs["href"]
             detail = a.getText()
-            SCH = print(href,detail)
+            SCH = href,detail
             event_list.append(SCH)
     return event_list

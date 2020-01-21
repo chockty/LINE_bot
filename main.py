@@ -64,9 +64,10 @@ def handle_message(event):
     if key_word == "スケジュール" or "いつ？":
         scriping = gs.scriping()
         event_info = gs.get_schedules(scriping)
-        line_bot_api.reply_message(
-        event.reply_token,
-        TextSendMessage(text=event_info[1]))
+        for a_event in event_info:
+            line_bot_api.reply_message(
+                event.reply_token,
+                TextSendMessage(text=a_event))
 #    else:
 #        auth = gkp.photo_user_auth()
 #        show_img_url = gkp.get_photo_url(key_word)

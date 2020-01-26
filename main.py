@@ -56,29 +56,28 @@ def callback():
 #reply_messageの第一引数のevent.reply_tokenは、イベントの応答に用いるトークンです。 
 #第二引数には、linebot.modelsに定義されている返信用のTextSendMessageオブジェクトを渡しています。
 
-KeyErrorlist = ["カメコに写真もらおうか","shortage of photos","出直せ","ライブ行っとけ"]
 
 #Success
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
     key_word = event.message.text
-    if key_word === "スケジュール" or "いつ？":
+    if key_word == "スケジュール" or "いつ？":
         scriping = gs.scriping()
         event_info = gs.get_schedules(scriping)
         line_bot_api.reply_message(
             event.reply_token,TextSendMessage(text=event_info))
-
     else:
         auth = gkp.photo_user_auth()
         show_img_url = gkp.get_photo_url(key_word)
         if not show_img_url:
+            KeyErrorlist = ["カメコに写真もらおうか","shortage of photos","出直せ","ライブ行っとけ"]
             error_object = random.choice(KeyErrorlist)
             line_bot_api.reply_message(
             event.reply_token,TextSendMessage(text=error_object))
         else:
             line_bot_api.reply_message(
                 event.reply_token,
-                ImageSendMessage(original_content_url=show_img_url,preview_image_url=show_img_url))
+                ImageSendMessage(original_content_url=show_img_url,preview_image_url=show_img_url))            
  
 # ポート番号の設定
 if __name__ == "__main__":

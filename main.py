@@ -61,7 +61,7 @@ def callback():
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
     key_word = event.message.text
-    if key_word == "スケジュール" or "いつ？":
+    if key_word == "スケジュール" or key_word == "いつ？":
         scriping = gs.scriping()
         event_info = gs.get_schedules(scriping)
         line_bot_api.reply_message(

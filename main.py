@@ -73,7 +73,7 @@ def handle_message(event):
         if not show_img_url:
             error_object = random.choice(KeyErrorlist)
             line_bot_api.reply_message(
-            event.reply_token,TextSendMessage(text=error_object))
+            event.reply_token,TextSendMessage(text=error_object.text))
         else:
             line_bot_api.reply_message(
                 event.reply_token,

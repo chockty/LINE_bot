@@ -42,7 +42,7 @@ def get_photo_url(key_word):
         get_photos = service.mediaItems().search(body=format_search).execute()
         get_photo_info = random.choice(get_photos["mediaItems"])
         show_img_url = get_photo_info["baseUrl"] + "=w{width}-h{height}".format(width=get_photo_info["mediaMetadata"]["width"],height=get_photo_info["mediaMetadata"]["height"])
-    return show_img_url
+        return show_img_url
 
 #response = requests.get(show_img_url)
 #response

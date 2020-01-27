@@ -30,9 +30,9 @@ nextPageToken = ""
 get_album_list = service.albums().list(pageSize=10, pageToken=nextPageToken).execute()
 album_id = ()
 
-def get_photo_url(key_word):
+def get_photo_url(keyword):
     for num in range(0, len(get_album_list["albums"])):
-        if key_word == get_album_list["albums"][num]["title"]:
+        if keyword == get_album_list["albums"][num]["title"]:
             album_id = get_album_list["albums"][num]["id"]
         format_search ={ 
             "albumId" : album_id,

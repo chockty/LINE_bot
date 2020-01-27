@@ -57,6 +57,7 @@ def callback():
 #第二引数には、linebot.modelsに定義されている返信用のTextSendMessageオブジェクトを渡しています。
 
 
+KeyErrorlist = ["カメコに写真もらおうか","shortage of photos","出直せ","ライブ行っとけ"]
 #Success
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
@@ -70,7 +71,6 @@ def handle_message(event):
         auth = gkp.photo_user_auth()
         show_img_url = gkp.get_photo_url(key_word)
         if not show_img_url:
-            KeyErrorlist = ["カメコに写真もらおうか","shortage of photos","出直せ","ライブ行っとけ"]
             error_object = random.choice(KeyErrorlist)
             line_bot_api.reply_message(
             event.reply_token,TextSendMessage(text=error_object))

@@ -57,7 +57,7 @@ def callback():
 #第二引数には、linebot.modelsに定義されている返信用のTextSendMessageオブジェクトを渡しています。
 
 
-KeyErrorlist = ["カメコに写真もらおうか","shortage of photos","出直せ","ライブ行っとけ"]
+KeyErrorlist = ["いいからカメコになれ","いいからライブ行け"]
 #Success
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):

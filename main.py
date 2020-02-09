@@ -78,13 +78,13 @@ def handle_message(event):
             write = wcr.hantei_wtite(get_calendar,get_sch)
             line_bot_api.reply_message(
                 event.reply_token,TextSendMessage(text="書き込んだから忘れんなよ"))
-        except Exception as ex:
+        except Exception as EX:
             line_bot_api.reply_message(
                 event.reply_token,TextSendMessage(text="無理やった。。。"))
     else:
         auth = gkp.photo_user_auth()
         image_info = gkp.get_photo_url(key_word)
-        if image_info not :
+        if not image_info:
             error_object = random.choice(KeyErrorlist)
             line_bot_api.reply_message(
                 event.reply_token,TextSendMessage(text=error_object))

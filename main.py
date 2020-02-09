@@ -13,6 +13,8 @@ import os
 import get_keyword_photo as gkp
 import get_schedules as gs
 import random
+from write_Sch import get_sch_tweet as gst
+from write_Sch import write_calendar as wcr
  
 app = Flask(__name__)
  
@@ -67,17 +69,29 @@ def handle_message(event):
         event_info = gs.get_schedules(scriping)
         line_bot_api.reply_message(
             event.reply_token,TextSendMessage(text=event_info))
+    elif key_word == "カレンダーに入れたい" or key_word =="カレンダー":
+        get_tweet = gst.get_API_tweet()
+        try:
+            get_sch = gst.edit_sch(get_tweet)
+            auth_caledar = wcr.calendar_user_auth()
+            get_calendar = wcr.get_calendar_events(auth_caledar)
+            write = wcr.hantei_wtite(get_calendar,get_sch)
+            line_bot_api.reply_message(
+                event.reply_token,TextSendMessage(text="書き込んだから忘れんなよ"))
+        except Exception as ex:
+            line_bot_api.reply_message(
+                event.reply_token,TextSendMessage(text="無理やった。。。"))
     else:
         auth = gkp.photo_user_auth()
-        show_img_url = gkp.get_photo_url(key_word)
-        if not show_img_url:
+        image_info = gkp.get_photo_url(key_word)
+        if image_info not :
             error_object = random.choice(KeyErrorlist)
             line_bot_api.reply_message(
                 event.reply_token,TextSendMessage(text=error_object))
         else:
             line_bot_api.reply_message(
                 event.reply_token,
-                ImageSendMessage(original_content_url=show_img_url,preview_image_url=show_img_url))
+                ImageSendMessage(original_content_url=image_info[0],preview_image_url=image_info[1]))
          
 # ポート番号の設定
 if __name__ == "__main__":

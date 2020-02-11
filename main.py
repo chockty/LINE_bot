@@ -10,11 +10,13 @@ from linebot.models import (
     MessageEvent, TextMessage, TextSendMessage, ImageMessage, ImageSendMessage
 )
 import os
+import random
 import get_keyword_photo as gkp
 import get_schedules as gs
-import random
 from write_Sch import get_sch_tweet as gst
 from write_Sch import write_calendar as wcr
+from write_Sch import get_sch_web as gsw
+from write_Sch import write_calendar_detail as wcd
  
 app = Flask(__name__)
  
@@ -76,11 +78,17 @@ def handle_message(event):
             auth_caledar = wcr.calendar_user_auth()
             get_calendar = wcr.get_calendar_events(auth_caledar)
             write = wcr.hantei_wtite(get_calendar,get_sch)
+            get_web_info = gsw.get_sch_info()
+            edited_info = gsw.edit_sch_info(get_web_info)
+            write_deatil = wcd.write_calendar_details(get_calendar,edited_info)
             line_bot_api.reply_message(
                 event.reply_token,TextSendMessage(text="書き込んだから忘れんなよ"))
         except Exception as EX:
+            get_web_info = gsw.get_sch_info()
+            edited_info = gsw.edit_sch_info(get_web_info)
+            write_deatil = wcd.write_calendar_details(get_calendar,edited_info)
             line_bot_api.reply_message(
-                event.reply_token,TextSendMessage(text="無理やった。。。"))
+                event.reply_token,TextSendMessage(text="もうそのツイートは古い。"))
     else:
         auth = gkp.photo_user_auth()
         image_info = gkp.get_photo_url(key_word)

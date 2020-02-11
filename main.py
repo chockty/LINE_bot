@@ -84,6 +84,8 @@ def handle_message(event):
             line_bot_api.reply_message(
                 event.reply_token,TextSendMessage(text="書き込んだから忘れんなよ"))
         except Exception as EX:
+            auth_caledar = wcr.calendar_user_auth()
+            get_calendar = wcr.get_calendar_events(auth_caledar)
             get_web_info = gsw.get_sch_info()
             edited_info = gsw.edit_sch_info(get_web_info)
             write_deatil = wcd.write_calendar_details(get_calendar,edited_info)

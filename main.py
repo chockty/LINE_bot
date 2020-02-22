@@ -11,6 +11,7 @@ from linebot.models import (
 )
 import os
 import random
+import collections
 import get_keyword_photo as gkp
 import get_schedules as gs
 from write_Sch import get_sch_tweet as gst
@@ -67,30 +68,55 @@ KeyErrorlist = ["いいからカメコになれ","いいからライブ行け"]
 def handle_message(event):
     key_word = event.message.text
     if key_word == "スケジュール" or key_word == "いつ？":
+        line_bot_api.reply_message(
+            event.reply_token,TextSendMessage(text="検索中。。。。"))
         scriping = gs.scriping()
         event_info = gs.get_schedules(scriping)
         line_bot_api.reply_message(
             event.reply_token,TextSendMessage(text=event_info))
-    elif key_word == "カレンダーに入れたい" or key_word =="カレンダー":
-        get_tweet = gst.get_API_tweet()
+    elif key_word == "月" in key_word and "半" in key_word:
+        line_bot_api.reply_message(
+            event.reply_token,TextSendMessage(text="ちょい待ち"))
+        get_tweet = gst.get_API_tweet(key_word)
         try:
             get_sch = gst.edit_sch(get_tweet)
+            line_bot_api.reply_message(
+                event.reply_token,TextSendMessage(text=get_sch))
             auth_caledar = wcr.calendar_user_auth()
             get_calendar = wcr.get_calendar_events(auth_caledar)
             write = wcr.hantei_wtite(get_calendar,get_sch)
             get_web_info = gsw.get_sch_info()
             edited_info = gsw.edit_sch_info(get_web_info)
-            write_deatil = wcd.write_calendar_details(get_calendar,edited_info)
+            write_detail = wcd.write_calendar_details(get_calendar,edited_info)
             line_bot_api.reply_message(
                 event.reply_token,TextSendMessage(text="書き込んだから忘れんなよ"))
+            line_bot_api.reply_message(
+                event.reply_token,TextSendMessage(text="例外あったわ\n{}".format(get_sch.except_list)))
         except Exception as EX:
+            line_bot_api.reply_message(
+                event.reply_token,TextSendMessage(text="ツイートなかったわ"))
             auth_caledar = wcr.calendar_user_auth()
             get_calendar = wcr.get_calendar_events(auth_caledar)
             get_web_info = gsw.get_sch_info()
             edited_info = gsw.edit_sch_info(get_web_info)
             write_deatil = wcd.write_calendar_details(get_calendar,edited_info)
             line_bot_api.reply_message(
-                event.reply_token,TextSendMessage(text="もうそのツイートは古い。"))
+                event.reply_token,TextSendMessage(text="公式に出てたスケジュールだけ入れておいたよ"))
+    elif key_word == "月" in key_word and "半" in key_word and "ツイート数" in key_word:
+        key_word.split("ツイート")
+        get_tweet = gst.ex_get_API_tweet(key_word)
+        try:
+            get_sch = gst.edit_sch(get_tweet)
+            auth_caledar = wcr.calendar_user_auth()
+            get_calendar = wcr.get_calendar_events(auth_caledar)
+            write = wcr.hantei_wtite(get_calendar,get_sch)
+            line_bot_api.reply_message(
+                event.reply_token,TextSendMessage(text="書き込んだから忘れんなよ"))
+            line_bot_api.reply_message(
+                event.reply_token,TextSendMessage(text="例外あったわ\n{}".format(get_sch.except_list)))
+        except Exception as EX:
+            line_bot_api.reply_message(
+                event.reply_token,TextSendMessage(text="やっぱツイートなかったわ"))
     else:
         auth = gkp.photo_user_auth()
         image_info = gkp.get_photo_url(key_word)

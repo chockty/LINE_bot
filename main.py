@@ -68,13 +68,13 @@ KeyErrorlist = ["いいからカメコになれ","いいからライブ行け"]
 def handle_message(event):
     key_word = event.message.text
     if key_word == "スケジュール" or key_word == "いつ？":
-        line_bot_api.reply_message(
-            event.reply_token,TextSendMessage(text="検索中。。。。"))
+#        line_bot_api.reply_message(
+#            event.reply_token,TextSendMessage(text="検索中。。。。"))
         scriping = gs.scriping()
         event_info = gs.get_schedules(scriping)
         line_bot_api.reply_message(
             event.reply_token,TextSendMessage(text=event_info))
-    elif key_word == "月" in key_word and "半" in key_word:
+    elif "月" in key_word and "半" in key_word:
         line_bot_api.reply_message(
             event.reply_token,TextSendMessage(text="ちょい待ち"))
         get_tweet = gst.get_API_tweet(key_word)
@@ -102,7 +102,7 @@ def handle_message(event):
             write_deatil = wcd.write_calendar_details(get_calendar,edited_info)
             line_bot_api.reply_message(
                 event.reply_token,TextSendMessage(text="公式に出てたスケジュールだけ入れておいたよ"))
-    elif key_word == "月" in key_word and "半" in key_word and "ツイート数" in key_word:
+    elif "月" in key_word and "半" in key_word and "ツイート数" in key_word:
         key_word.split("ツイート")
         get_tweet = gst.ex_get_API_tweet(key_word)
         try:

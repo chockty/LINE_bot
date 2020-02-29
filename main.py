@@ -75,8 +75,8 @@ def handle_message(event):
         line_bot_api.reply_message(
             event.reply_token,TextSendMessage(text=event_info))
     elif "月" in key_word and "半" in key_word:
-        line_bot_api.reply_message(
-            event.reply_token,TextSendMessage(text="ちょい待ち"))
+#        line_bot_api.reply_message(
+#            event.reply_token,TextSendMessage(text="ちょい待ち"))
         get_tweet = gst.get_API_tweet(key_word)
         try:
             get_sch = gst.edit_sch(get_tweet)
@@ -88,10 +88,12 @@ def handle_message(event):
             get_web_info = gsw.get_sch_info()
             edited_info = gsw.edit_sch_info(get_web_info)
             write_detail = wcd.write_calendar_details(get_calendar,edited_info)
-            line_bot_api.reply_message(
-                event.reply_token,TextSendMessage(text="書き込んだから忘れんなよ"))
-            line_bot_api.reply_message(
-                event.reply_token,TextSendMessage(text="例外あったわ\n{}".format(get_sch.except_list)))
+#            line_bot_api.reply_message(
+#                event.reply_token,TextSendMessage(text=get_sch))
+#            line_bot_api.reply_message(
+#                event.reply_token,TextSendMessage(text="書き込んだから忘れんなよ"))
+#            line_bot_api.reply_message(
+#                event.reply_token,TextSendMessage(text="例外あったわ\n{}".format(get_sch.except_list)))
         except Exception as EX:
             line_bot_api.reply_message(
                 event.reply_token,TextSendMessage(text="ツイートなかったわ"))
@@ -100,8 +102,8 @@ def handle_message(event):
             get_web_info = gsw.get_sch_info()
             edited_info = gsw.edit_sch_info(get_web_info)
             write_deatil = wcd.write_calendar_details(get_calendar,edited_info)
-            line_bot_api.reply_message(
-                event.reply_token,TextSendMessage(text="公式に出てたスケジュールだけ入れておいたよ"))
+#            line_bot_api.reply_message(
+#                event.reply_token,TextSendMessage(text="公式に出てたスケジュールだけ入れておいたよ"))
     elif "月" in key_word and "半" in key_word and "ツイート数" in key_word:
         key_word.split("ツイート")
         get_tweet = gst.ex_get_API_tweet(key_word)

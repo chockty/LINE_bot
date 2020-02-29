@@ -77,11 +77,11 @@ def handle_message(event):
     elif "月" in key_word and "半" in key_word:
 #        line_bot_api.reply_message(
 #            event.reply_token,TextSendMessage(text="ちょい待ち"))
-        get_tweet = gst.get_API_tweet(key_word)
         try:
+            get_tweet = gst.get_API_tweet(key_word)
             get_sch = gst.edit_sch(get_tweet)
             line_bot_api.reply_message(
-                event.reply_token,TextSendMessage(text=get_sch))
+                event.reply_token,TextSendMessage(text=get_tweet))
             auth_caledar = wcr.calendar_user_auth()
             get_calendar = wcr.get_calendar_events(auth_caledar)
             write = wcr.hantei_wtite(get_calendar,get_sch)
@@ -104,21 +104,21 @@ def handle_message(event):
             write_deatil = wcd.write_calendar_details(get_calendar,edited_info)
 #            line_bot_api.reply_message(
 #                event.reply_token,TextSendMessage(text="公式に出てたスケジュールだけ入れておいたよ"))
-    elif "月" in key_word and "半" in key_word and "ツイート数" in key_word:
-        key_word.split("ツイート")
-        get_tweet = gst.ex_get_API_tweet(key_word)
-        try:
-            get_sch = gst.edit_sch(get_tweet)
-            auth_caledar = wcr.calendar_user_auth()
-            get_calendar = wcr.get_calendar_events(auth_caledar)
-            write = wcr.hantei_wtite(get_calendar,get_sch)
-            line_bot_api.reply_message(
-                event.reply_token,TextSendMessage(text="書き込んだから忘れんなよ"))
-            line_bot_api.reply_message(
-                event.reply_token,TextSendMessage(text="例外あったわ\n{}".format(get_sch.except_list)))
-        except Exception as EX:
-            line_bot_api.reply_message(
-                event.reply_token,TextSendMessage(text="やっぱツイートなかったわ"))
+#    elif "月" in key_word and "半" in key_word and "ツイート数" in key_word:
+#        key_word.split("ツイート")
+#        get_tweet = gst.ex_get_API_tweet(key_word)
+#        try:
+#            get_sch = gst.edit_sch(get_tweet)
+#            auth_caledar = wcr.calendar_user_auth()
+#            get_calendar = wcr.get_calendar_events(auth_caledar)
+#            write = wcr.hantei_wtite(get_calendar,get_sch)
+#            line_bot_api.reply_message(
+#                event.reply_token,TextSendMessage(text="書き込んだから忘れんなよ"))
+#            line_bot_api.reply_message(
+#                event.reply_token,TextSendMessage(text="例外あったわ\n{}".format(get_sch.except_list)))
+#        except Exception as EX:
+#            line_bot_api.reply_message(
+#                event.reply_token,TextSendMessage(text="やっぱツイートなかったわ"))
     else:
         auth = gkp.photo_user_auth()
         image_info = gkp.get_photo_url(key_word)

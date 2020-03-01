@@ -95,6 +95,7 @@ def handle_message(event):
 #            line_bot_api.reply_message(
 #                event.reply_token,TextSendMessage(text="例外あったわ\n{}".format(get_sch.except_list)))
         except Exception as EX:
+            profile = event.source.user_id
             line_bot_api.push_message(
                 profile,TextSendMessage(text="ツイートなかったわ"))
 #            line_bot_api.reply_message(

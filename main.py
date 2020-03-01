@@ -82,7 +82,7 @@ def handle_message(event):
             get_tweet = gst.get_API_tweet(key_word)
             get_sch = gst.edit_sch(get_tweet)
             line_bot_api.push_message(
-                to=profile,message=TextSendMessage(text="処理中"))
+                profile,TextSendMessage(text="処理中"))
             auth_caledar = wcr.calendar_user_auth()
             get_calendar = wcr.get_calendar_events(auth_caledar)
             write = wcr.hantei_wtite(get_calendar,get_sch)

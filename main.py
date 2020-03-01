@@ -78,7 +78,7 @@ def handle_message(event):
 #        line_bot_api.reply_message(
 #            event.reply_token,TextSendMessage(text="ちょい待ち"))
         try:
-            profile = line_bot_api.get_profile(event.source.user_id)
+            profile = event.source.user_id
             get_tweet = gst.get_API_tweet(key_word)
             get_sch = gst.edit_sch(get_tweet)
             line_bot_api.push_message(
@@ -99,7 +99,9 @@ def handle_message(event):
 #                event.reply_token,TextSendMessage(text="例外あったわ\n{}".format(get_sch.except_list)))
         except Exception as EX:
             line_bot_api.push_message(
-                to=profile,messages=TextSendMessage(text="no tweet"))
+                to=profile,
+                messages=TextSendMessage(text="no tweet")
+                )
             line_bot_api.reply_message(
                 event.reply_token,TextSendMessage(text="ツイートなかったわ"))
             auth_caledar = wcr.calendar_user_auth()

@@ -78,9 +78,9 @@ def handle_message(event):
         line_bot_api.reply_message(
             event.reply_token,TextSendMessage(text=event_info))
     elif "月" in key_word and "半" in key_word:
-        profile = event.source.user_id
-        line_bot_api.push_message(
-                profile,TextSendMessage(text="処理中"))
+    #    profile = event.source.user_id
+    #    line_bot_api.push_message(
+    #            profile,TextSendMessage(text="処理中"))
         try:    
             get_tweet = gst.get_API_tweet(key_word)
             get_sch = gst.edit_sch(get_tweet)

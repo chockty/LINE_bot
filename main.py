@@ -98,6 +98,8 @@ def handle_message(event):
 #            line_bot_api.reply_message(
 #                event.reply_token,TextSendMessage(text="例外あったわ\n{}".format(get_sch.except_list)))
         except Exception as EX:
+            line_bot_api.push_message(
+                profile,TextSendMessage(text="no tweet"))
             line_bot_api.reply_message(
                 event.reply_token,TextSendMessage(text="ツイートなかったわ"))
             auth_caledar = wcr.calendar_user_auth()

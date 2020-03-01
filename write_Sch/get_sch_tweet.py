@@ -19,7 +19,7 @@ def get_API_tweet(keyword):
     api = tweepy.API(auth, wait_on_rate_limit=True)
     q=keyword.translate(henkan_table)
     Sch_list = ()
-    get_tweets = api.user_timeline(screen_name = "toricago_O",tweet_mode = "extended",count = 100)
+    get_tweets = api.user_timeline(screen_name = "toricago_O",tweet_mode = "extended",count = 200)
     for tweet in get_tweets:
         if q in tweet.full_text:
             if not "RT @" in tweet.full_text:

@@ -84,7 +84,7 @@ def handle_message(event):
             get_sch = gst.edit_sch(get_tweet)
             auth_caledar = wcr.calendar_user_auth()
             get_calendar = wcr.get_calendar_events(auth_caledar)
-            write = wcr.hantei_wtite(get_calendar,get_sch)
+            write = wcr.hantei_wtite(get_calendar,get_sch.edited_Sch_list)
             line_bot_api.reply_message(
                 event.reply_token,TextSendMessage(text=get_tweet))
 #            line_bot_api.reply_message(

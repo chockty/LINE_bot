@@ -71,27 +71,25 @@ def handle_message(event):
         profile = event.source.user_id
         line_bot_api.push_message(
                 profile,TextSendMessage(text="ちょい待ち"))
-#        line_bot_api.reply_message(
-#            event.reply_token,TextSendMessage(text="検索中。。。。"))
         scriping = gs.scriping()
         event_info = gs.get_schedules(scriping)
         line_bot_api.reply_message(
             event.reply_token,TextSendMessage(text=event_info))
     elif "月" in key_word and "半" in key_word:
+        profile = event.source.user_id
+        line_bot_api.push_message(
+                profile,TextSendMessage(text="まぁ待てや"))
         try:    
             get_tweet = gst.get_API_tweet(key_word)
-#            get_sch = gst.edit_sch(get_tweet)
-#            auth_caledar = wcr.calendar_user_auth()
-#            get_calendar = wcr.get_calendar_events(auth_caledar)
-#            write = wcr.hantei_wtite(get_calendar,get_sch)
-#            get_web_info = gsw.get_sch_info()
-#            edited_info = gsw.edit_sch_info(get_web_info)
-#            write_detail = wcd.write_calendar_details(get_calendar,edited_info)
+            get_sch = gst.edit_sch(get_tweet)
+            auth_caledar = wcr.calendar_user_auth()
+            get_calendar = wcr.get_calendar_events(auth_caledar)
+            write = wcr.hantei_wtite(get_calendar,get_sch)
+            get_web_info = gsw.get_sch_info()
+            edited_info = gsw.edit_sch_info(get_web_info)
+            write_detail = wcd.write_calendar_details(get_calendar,edited_info)
             line_bot_api.reply_message(
                 event.reply_token,TextSendMessage(text=get_tweet))
-    #    profile = event.source.user_id
-    #    line_bot_api.push_message(
-    #            profile,TextSendMessage(text="処理中"))
 #            line_bot_api.reply_message(
 #                event.reply_token,TextSendMessage(text="例外あったわ\n{}".format(get_sch.except_list)))
         except Exception as EX:

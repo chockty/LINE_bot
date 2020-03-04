@@ -19,32 +19,30 @@ def get_API_tweet(keyword):
     api = tweepy.API(auth, wait_on_rate_limit=True)
     q=keyword.translate(henkan_table)
     Sch_list = ()
-    get_tweets = api.user_timeline(screen_name = "toricago_O",tweet_mode = "extended",count = 200)
+    get_tweets = api.user_timeline(screen_name = "toricago_O",tweet_mode = "extended",count = 100)
     for tweet in get_tweets:
-        if q in tweet.full_text:
+        if q in get_tweets:
             if not "RT @" in tweet.full_text:
                 Sch_list = tweet.full_text
+                break
             else:
                 Sch_list = tweet.retweeted_status.full_text
+                break
+    if not Sch_list:
+        for num in range(50,200,50):
+            get_tweets = api.user_timeline(screen_name = "toricago_O",tweet_mode = "extended",count = 100+int(num))
+            for tweet in get_tweets:
+                if q in tweet.full_text:
+                    if not "RT @" in tweet.full_text:
+                        Sch_list = tweet.full_text
+                        break
+                    else:
+                        Sch_list = tweet.retweeted_status.full_text
+                        break
+                else:
+                    continue
     return Sch_list
-
-#ツイートが古かった時
-def ex_get_API_tweet(keyword):
-    auth = tweepy.OAuthHandler(CONSUMERKEY, SECRETKEY)
-    auth.set_access_token(ACCESSTOKEN,SECRETTOKEN)
-    api = tweepy.API(auth, wait_on_rate_limit=True)
-    q=keyword[0].translate(henkan_table)
-    n=int(keyword[1])
-    Sch_list = ()
-    get_tweets = api.user_timeline(screen_name = "toricago_O",tweet_mode = "extended",count = n)
-    for tweet in get_tweets:
-        if q in tweet.full_text:
-            if not "RT @" in tweet.full_text:
-                Sch_list = tweet.full_text
-            else:
-                Sch_list = tweet.retweeted_status.full_text
-    return Sch_list
-
+    
 #取得ツイートをカレンダーへ入力可能な形へ変形
 def edit_sch(Sch_list):
     Sch_list = Sch_list.split("\n")

@@ -73,8 +73,9 @@ def handle_message(event):
                 profile,TextSendMessage(text="ちょい待ち"))
         scriping = gs.scriping()
         event_info = gs.get_schedules(scriping)
-        line_bot_api.reply_message(
-            event.reply_token,TextSendMessage(text=event_info))
+        line_bot_api.push_message(
+            profile,TextSendMessage(text=event_info))
+        
     elif "月" in key_word and "半" in key_word:
         profile = event.source.user_id
         line_bot_api.push_message(

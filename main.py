@@ -76,6 +76,7 @@ def handle_message(event):
         line_bot_api.push_message(
             profile,TextSendMessage(text=event_info))
         
+        
     elif "月" in key_word and "半" in key_word:
         profile = event.source.user_id
         line_bot_api.push_message(
@@ -88,8 +89,12 @@ def handle_message(event):
             write = wcr.hantei_wtite(get_calendar,get_sch.edited_Sch_list)
             line_bot_api.push_message(
                 profile,TextSendMessage(text=get_tweet))
-            line_bot_api.reply_message(
-                event.reply_token,TextSendMessage(text="これは自己管理な。\n{}".format(get_sch.except_list)))
+            if get_sch.except_list is None:
+                line_bot_api.reply_message(
+                    event.reply_token,TextSendMessage(text="カレンダーにも入れておいたよ"))
+            else:
+                line_bot_api.reply_message(
+                    event.reply_token,TextSendMessage(text="これは自己管理な。\n{}".format(get_sch.except_list)))
         except Exception as EX:
             line_bot_api.push_message(
                 profile,TextSendMessage(text="ツイートなかったわ"))

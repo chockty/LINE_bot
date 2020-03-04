@@ -47,7 +47,6 @@ def hantei_wtite(DICT,edited_Sch_list):
         if not DICT:
             event = {
                 "summary": "鶯籠(未)"+ edited_Sch_list[DATE],
-                "description":
                 "start": {
                     "date": DATE,
                     "timezone": "Asia/Tokyo",
@@ -71,7 +70,6 @@ def hantei_wtite(DICT,edited_Sch_list):
             else:
                 event = {
                     "summary": "鶯籠(未)"+ edited_Sch_list[DATE],
-                    "description":
                     "start": {
                         "date": DATE,
                         "timezone": "Asia/Tokyo",
@@ -89,7 +87,6 @@ def hantei_wtite(DICT,edited_Sch_list):
         else:
             event = {
                 "summary": "鶯籠(未)"+edited_Sch_list[DATE],
-                "description":
                 "start": {
                     "date": DATE,
                     "timezone": "Asia/Tokyo",

@@ -46,9 +46,9 @@ def choice_a_day(keyword,edit_info):
     key = "エラー発生"
     if "月" in keyword and "日" in keyword:
         try:
+            keyword = keyword.replace("月","/") 
+            keyword = keyword.replace("日","") 
             selected_day = str(today.year) + "年" + keyword
-            selected_day = datetime.datetime.strptime(selected_day,"%Y年%m月%d日")
-            selected_day = selected_day.strftime("%Y-%m-%d")
         except KeyError as key:
             return key
     elif "/" in keyword:
@@ -60,9 +60,9 @@ def choice_a_day(keyword,edit_info):
             return key
     else:
         try:
+            keyword = keyword.replace("0","/") 
+            keyword = keyword.replace("0","") 
             selected_day = str(today.year) + keyword
-            selected_day = datetime.datetime.strptime(selected_day,"%Y%m%d")
-            selected_day = selected_day.strftime("%Y-%m-%d")
         except KeyError as key:
             return key
             

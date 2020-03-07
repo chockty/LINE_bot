@@ -75,7 +75,34 @@ def handle_message(event):
         event_info = gs.get_schedules(scriping)
         line_bot_api.push_message(
             profile,TextSendMessage(text=event_info))
-        
+
+    elif "月" in key_word and "日" in key_word:
+        profile = event.source.user_id
+        line_bot_api.push_message(
+                profile,TextSendMessage(text="まぁ待てって"))
+        scriping = gs.scriping()
+        event_info = gs.get_a_schedule(scriping)
+        try:
+            choice_a_day = gsw.choice_a_day(key_word,event_info)
+            line_bot_api.reply_message(
+                event.reply_token,TextSendMessage(text=choice_a_day))
+        except KeyError as key:
+            line_bot_api.reply_message(
+                event.reply_token,TextSendMessage(text="その日にはないよ"))
+
+    elif "/" in key_word:
+        profile = event.source.user_id
+        line_bot_api.push_message(
+                profile,TextSendMessage(text="まぁ待チー二"))
+        scriping = gs.scriping()
+        event_info = gs.get_a_schedule(scriping)
+        try:
+            choice_a_day = gsw.choice_a_day(key_word,event_info)
+            line_bot_api.reply_message(
+                event.reply_token,TextSendMessage(text=choice_a_day))
+        except KeyError as key:
+            line_bot_api.reply_message(
+                event.reply_token,TextSendMessage(text="その日にはないよ"))
         
     elif "月" in key_word and "半" in key_word:
         profile = event.source.user_id
@@ -89,7 +116,7 @@ def handle_message(event):
             write = wcr.hantei_wtite(get_calendar,get_sch.edited_Sch_list)
             line_bot_api.push_message(
                 profile,TextSendMessage(text=get_tweet))
-            if get_sch.except_list is None:
+            if len(get_sch.except_list) == 0:
                 line_bot_api.reply_message(
                     event.reply_token,TextSendMessage(text="カレンダーにも入れておいたよ"))
             else:

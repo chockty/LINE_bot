@@ -3,19 +3,16 @@ from bs4 import BeautifulSoup
 import requests
 import datetime
 
-#★必要なデータのみを残す処理
-def get_sch_info():
-    html = requests.get("https://toricago.info/schedule/")
-    soup = BeautifulSoup(html.text, "lxml")
-    text = soup.get_text()
-    text = text.split("FUTURE")
-    i = text[1].split("ACT")
-    return i
-
 #★必要なデータを取り込み用に処理
 Remove_list = ["(Mon)","(Tue)","(Wed)","(Thu)","(Fri)","(Sat)","(Sun)","（Mon）","（Tue）","（Wed）","（Thu）","（Fri）","（Sat）","（Sun）"]
 
+#全角→半角のテーブル
+henkan_table = str.maketrans({"１":"1","２":"2","３":"3","４":"4","５":"5","６":"6","７":"7","８":"8","９":"9","０":"0"})
+
 def edit_sch_info(i):
+    text = i.get_text()
+    text = text.split("FUTURE")
+    i = text[1].split("ACT")
     for num in range(0,len(i)):
         i[num] = i[num].replace("\n", "")
         i[num] = i[num].replace("\t", "")
@@ -41,3 +38,37 @@ def edit_sch_info(i):
         
     edited_info = dict(i)
     return edited_info
+
+def choice_a_day(keyword,edit_info):
+    keyword = keyword.translate(henkan_table)
+    today = datetime.date.today()
+    selected_day = ()
+    key = "エラー発生"
+    if "月" in keyword and "日" in keyword:
+        try:
+            selected_day = str(today.year) + "年" + keyword
+            selected_day = datetime.datetime.strptime(selected_day,"%Y年%m月%d日")
+            selected_day = selected_day.strftime("%Y-%m-%d")
+        except KeyError as key:
+            return key
+    elif "/" in keyword:
+        try:
+            selected_day = str(today.year) + "/" + keyword
+            selected_day = datetime.datetime.strptime(selected_day,"%Y/%m/%d")
+            selected_day = selected_day.strftime("%Y-%m-%d")
+        except KeyError as key:
+            return key
+    else:
+        try:
+            selected_day = str(today.year) + keyword
+            selected_day = datetime.datetime.strptime(selected_day,"%Y%m%d")
+            selected_day = selected_day.strftime("%Y-%m-%d")
+        except KeyError as key:
+            return key
+            
+    for a_day in edit_info.keys():
+        if selected_day in a_day:
+            return edit_info[selected_day]
+            break
+        else:
+            continue

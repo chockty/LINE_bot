@@ -39,7 +39,7 @@ def edit_sch_info(i):
     edited_info = dict(i)
     return edited_info
 
-def choice_a_day(keyword,edit_info):
+def choice_a_day(keyword,event_info):
     keyword = keyword.translate(henkan_table)
     today = datetime.date.today()
     selected_day = ()
@@ -66,9 +66,9 @@ def choice_a_day(keyword,edit_info):
         except KeyError as key:
             return key
             
-    for a_day in edit_info.keys():
+    for a_day in event_info.keys():
         if selected_day in a_day:
-            return edit_info[selected_day]
+            return a_day,event_info[a_day]
             break
         else:
             continue

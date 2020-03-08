@@ -68,7 +68,9 @@ def choice_a_day(keyword,event_info):
             
     for a_day in event_info.keys():
         if selected_day in a_day:
-            return a_day,event_info[a_day]
+            a_day_info = []
+            a_day_info += a_day,event_info[a_day]
+            return a_day_info
             break
         else:
             continue

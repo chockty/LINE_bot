@@ -26,4 +26,5 @@ def get_a_schedule(get_schedule):
             event_set = a.getText(),href
             event_list.append(event_set)
     event_list = dict(event_list)
+    return event_list
     

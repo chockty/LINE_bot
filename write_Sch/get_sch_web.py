@@ -48,7 +48,7 @@ def choice_a_day(keyword,event_info):
         try:
             keyword = keyword.replace("月","/") 
             keyword = keyword.replace("日","") 
-            selected_day = str(today.year) + "年" + keyword
+            selected_day = str(today.year) + "/" + keyword
         except KeyError as key:
             return key
     elif "/" in keyword:

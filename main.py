@@ -13,10 +13,10 @@ import os
 import random
 import collections
 import get_keyword_photo as gkp
-import get_schedules as gs
+import get_web_schedules as gws
 from write_Sch import get_sch_tweet as gst
 from write_Sch import write_calendar as wcr
-from write_Sch import get_sch_web as gsw
+from write_Sch import get_websch_forcalendar as gwc
 from write_Sch import write_calendar_detail as wcd
  
 app = Flask(__name__)
@@ -71,7 +71,7 @@ def handle_message(event):
         profile = event.source.user_id
         line_bot_api.push_message(
                 profile,TextSendMessage(text="ちょい待ち"))
-        event_info = gs.get_schedules()
+        event_info = gws.get_schedules()
         line_bot_api.reply_message(
             event.reply_token,TextSendMessage(text=event_info))
 
@@ -79,9 +79,9 @@ def handle_message(event):
         profile = event.source.user_id
         line_bot_api.push_message(
                 profile,TextSendMessage(text="まぁ待てって"))
-        event_info = gs.get_a_schedule()
+        event_info = gws.get_a_schedule()
         try:
-            choice_day = gsw.choice_a_day(key_word,event_info)
+            choice_day = gws.choice_a_day(key_word,event_info)
             line_bot_api.reply_message(
                 event.reply_token,TextSendMessage(text=choice_day))
         except KeyError as key:
@@ -92,15 +92,41 @@ def handle_message(event):
         profile = event.source.user_id
         line_bot_api.push_message(
                 profile,TextSendMessage(text="まぁ待チー二"))
-        event_info = gs.get_a_schedule()
+        event_info = gws.get_a_schedule()
         try:
-            choice_day = gsw.choice_a_day(key_word,event_info)
+            choice_day = gws.choice_a_day(key_word,event_info)
             line_bot_api.reply_message(
                 event.reply_token,TextSendMessage(text=choice_day))
         except KeyError as key:
             line_bot_api.reply_message(
                 event.reply_token,TextSendMessage(text="その日にはないよ"))
+
+    elif "次" in key_word:
+        profile = event.source.user_id
+        line_bot_api.push_message(
+                profile,TextSendMessage(text="焦んなって"))
+        event_info = gws.get_a_schedule()
+        try:
+            earlist_one = gws.get_a_earlist_schedule(event_info)
+            line_bot_api.reply_message(
+                event.reply_token,TextSendMessage(text=earlist_one))
+        except Exception as ex:
+            line_bot_api.reply_message(
+                event.reply_token,TextSendMessage(text="すまん。エラー。"))
         
+    elif key_word == "今日":
+        profile = event.source.user_id
+        line_bot_api.push_message(
+                profile,TextSendMessage(text="今日はな"))
+        event_info = gws.get_a_schedule()
+        try:
+            today_one = gws.get_today_event(event_info)
+            line_bot_api.reply_message(
+                event.reply_token,TextSendMessage(text=today_one))
+        except Exception as ex:
+            line_bot_api.reply_message(
+                event.reply_token,TextSendMessage(text="ないんだよ。。。"))
+
     elif "月" in key_word and "半" in key_word:
         profile = event.source.user_id
         line_bot_api.push_message(

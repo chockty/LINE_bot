@@ -71,8 +71,7 @@ def handle_message(event):
         profile = event.source.user_id
         line_bot_api.push_message(
                 profile,TextSendMessage(text="ちょい待ち"))
-        scriping = gs.scriping()
-        event_info = gs.get_schedules(scriping)
+        event_info = gs.get_schedules()
         line_bot_api.reply_message(
             event.reply_token,TextSendMessage(text=event_info))
 
@@ -80,12 +79,11 @@ def handle_message(event):
         profile = event.source.user_id
         line_bot_api.push_message(
                 profile,TextSendMessage(text="まぁ待てって"))
-        scriping = gs.scriping()
-        event_info = gs.get_a_schedule(scriping)
+        event_info = gs.get_a_schedule()
         try:
-            choice_a_day = gsw.choice_a_day(key_word,event_info)
+            choice_day = gsw.choice_a_day(key_word,event_info)
             line_bot_api.reply_message(
-                event.reply_token,TextSendMessage(text=choice_a_day[0],choice_a_day[1]))
+                event.reply_token,TextSendMessage(text=choice_day))
         except KeyError as key:
             line_bot_api.reply_message(
                 event.reply_token,TextSendMessage(text="その日にはないよ"))
@@ -94,12 +92,11 @@ def handle_message(event):
         profile = event.source.user_id
         line_bot_api.push_message(
                 profile,TextSendMessage(text="まぁ待チー二"))
-        scriping = gs.scriping()
-        event_info = gs.get_a_schedule(scriping)
+        event_info = gs.get_a_schedule()
         try:
-            choice_a_day = gsw.choice_a_day(key_word,event_info)
+            choice_day = gsw.choice_a_day(key_word,event_info)
             line_bot_api.reply_message(
-                event.reply_token,TextSendMessage(text=choice_a_day))
+                event.reply_token,TextSendMessage(text=choice_day))
         except KeyError as key:
             line_bot_api.reply_message(
                 event.reply_token,TextSendMessage(text="その日にはないよ"))

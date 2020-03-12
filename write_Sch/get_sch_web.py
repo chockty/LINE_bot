@@ -69,9 +69,9 @@ def choice_a_day(keyword,event_info):
     for a_day in event_info.keys():
         if selected_day in a_day:
             a_day_info = ()
-            event_info[a_day] = event_info[a_day].replace("\n", "")
+            edit_one = event_info[a_day].replace("\n", "")
             a_day = a_day.replace("\n", "")
-            a_day_info = a_day + "\n" + event_info[a_day]
+            a_day_info = a_day + "\n" + edit_one
             return a_day_info
             break
         else:

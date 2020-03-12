@@ -1,14 +1,12 @@
 from bs4 import BeautifulSoup
 import requests
 
-def scriping():
+def get_schedules():
+    event_list = []
     html = requests.get("https://toricago.info/schedule/")
     soup = BeautifulSoup(html.text, "lxml")
-    return soup
+    get_schedule = soup.find_all("ul",{"class":"sideRecList1"})
 
-def get_schedules(get_schedule):
-    event_list = []
-    get_schedule = get_schedule.find_all("ul",{"class":"sideRecList1"})
     for event in get_schedule:
         for a in event.select("a"):
             href = a.attrs["href"]
@@ -17,9 +15,12 @@ def get_schedules(get_schedule):
     event_info = "\n".join(event_list)
     return event_info
 
-def get_a_schedule(get_schedule):
+def get_a_schedule():
     event_list = []
-    get_schedule = get_schedule.find_all("ul",{"class":"sideRecList1"})
+    html = requests.get("https://toricago.info/schedule/")
+    soup = BeautifulSoup(html.text, "lxml")
+    get_schedule = soup.find_all("ul",{"class":"sideRecList1"})
+
     for event in get_schedule:
         for a in event.select("a"):
             href = a.attrs["href"]

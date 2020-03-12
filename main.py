@@ -73,8 +73,8 @@ def handle_message(event):
                 profile,TextSendMessage(text="ちょい待ち"))
         scriping = gs.scriping()
         event_info = gs.get_schedules(scriping)
-        line_bot_api.push_message(
-            profile,TextSendMessage(text=event_info))
+        line_bot_api.reply_message(
+            event.reply_token,TextSendMessage(text=event_info))
 
     elif "月" in key_word and "日" in key_word:
         profile = event.source.user_id
@@ -85,7 +85,7 @@ def handle_message(event):
         try:
             choice_a_day = gsw.choice_a_day(key_word,event_info)
             line_bot_api.reply_message(
-                event.reply_token,TextSendMessage(text=choice_a_day))
+                event.reply_token,TextSendMessage(text=choice_a_day[0],choice_a_day[1]))
         except KeyError as key:
             line_bot_api.reply_message(
                 event.reply_token,TextSendMessage(text="その日にはないよ"))

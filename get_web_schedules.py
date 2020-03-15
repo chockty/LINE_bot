@@ -102,3 +102,4 @@ def get_today_event(events_list):
         else:
             return Exception
     return a_day_info
+    

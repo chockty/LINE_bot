@@ -78,15 +78,27 @@ def get_today_event(events_list):
     today = datetime.date.today()
     today = str(today.year) + "/" + str(today.month) + "/" + str(today.day)
     events_list = dict(events_list)
+    a_day_info = []
+    count = 0
     
     for a_day in events_list.keys():
         if today in a_day:
-            a_day_info = ()
+            a_info = ()
             edit_one = events_list[a_day].replace("\n", "")
             a_day = a_day.replace("\n", "")
-            a_day_info = a_day + "\n" + edit_one
-            return a_day_info
-            break
+            a_info = a_day + "\n" + edit_one
+            a_day_info.append(a_info)
+            count += 1
+            if count == len(events_list.keys()):
+                break
+            else:
+                continue
+        elif today not in a_day:
+            count += 1
+            if count == len(events_list.keys()):
+                break
+            else:
+                continue
         else:
-            continue
-
+            return Exception
+    return a_day_info

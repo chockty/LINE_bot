@@ -71,7 +71,7 @@ def choice_a_day(keyword,event_info):
             continue
 
 def get_a_earlist_schedule(events_list):
-    a_earlist_one = events_list[0]
+    a_earlist_one = str(events_list[0])
     return a_earlist_one
 
 def get_today_event(events_list):

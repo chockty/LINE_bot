@@ -104,11 +104,8 @@ def get_today_event(events_list):
     if len(a_day_info) == 1:
         return a_day_info
     else:
-        a_day_infos = ()
-        for num in range(len(a_day_info)):
-            a_day_info[num] = a_day_info[num] + "\n" + "\n"
-            a_day_infos = tuple(a_day_info)
-        return a_day_infos
+        a_day_info = "\n\n".join(a_day_info)
+        return a_day_info
 
 
 

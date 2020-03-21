@@ -89,6 +89,11 @@ def choice_a_day(keyword,events_list):
         return a_day_info
 
 def get_a_earlist_schedule(events_list):
+    today = datetime.date.today()
+    yesterday = today + datetime.timedelta(days=-1)
+    today = str(today.year) + "/" + str(today.month) + "/" + str(today.day)
+    yesterday = str(yesterday.year) + "/" + str(yesterday.month) + "/" + str(yesterday.day)
+
     hantei_list = []
     for y_m_d in events_list:
         y_m_d = y_m_d[0].split("\n")
@@ -96,35 +101,38 @@ def get_a_earlist_schedule(events_list):
     
     a_day_info = []
     events_list = dict(events_list)
-    count = 0    
-    for y_m_d in hantei_list:
-        if y_m_d == hantei_list[0]:
-            count += 1
-    
+    h_count = 0
+    l_count = 0
+
+    for hantei_event in hantei_list:
+        if hantei_event == yesterday:
+            h_count += 1
+            continue
+        elif hantei_event != yesterday:
+            if hantei_event == today:
+                h_count += 1
+                continue
+            elif hantei_event != today:
+                break
+        else:
+            return Exception
+    else:
+        return Exception
+
     for a_day in events_list.keys():
-        if hantei_list[0] in a_day:
+        if hantei_list[h_count] in a_day:
             a_info = ()
             edit_one = events_list[a_day].replace("\n", "")
             a_day = a_day.replace("\n", "")
             a_info = a_day + "\n" + edit_one
             a_day_info.append(a_info)
-            count -= 1
-            if count > 0:
-                continue
-            elif count == 0:
+            l_count += 1
+        elif hantei_list[h_count] not in a_day:
+            l_count += 1
+            if l_count > h_count:
                 break
-            else:
-                return Exception
-        elif hantei_list[0] not in a_day:
-            count -= 1
-            if count > 0:
+            elif l_count < h_count:
                 continue
-            elif count == 0:
-                break
-            else:
-                return Exception
-        else:
-            return Exception
     
     if len(a_day_info) == 1:
         a_day_info = "\n".join(a_day_info)

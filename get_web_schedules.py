@@ -90,21 +90,21 @@ def choice_a_day(keyword,events_list):
 
 def get_a_earlist_schedule(events_list):
     hantei_list = []
-    for y_m_d in event_lists:
-        test = test[0].split("\n")
-        hantei_list.append(test[1])
+    for y_m_d in events_list:
+        y_m_d = y_m_d[0].split("\n")
+        hantei_list.append(y_m_d[1])
     
     a_day_info = []
-    event_list = dict(event_list)
+    events_list = dict(events_list)
     count = 0    
-    for test2 in hantei_list:
-        if test2 == hantei_list[0]:
+    for y_m_d in hantei_list:
+        if y_m_d == hantei_list[0]:
             count += 1
     
-    for a_day in event_list.keys():
+    for a_day in events_list.keys():
         if hantei_list[0] in a_day:
             a_info = ()
-            edit_one = event_list[a_day].replace("\n", "")
+            edit_one = events_list[a_day].replace("\n", "")
             a_day = a_day.replace("\n", "")
             a_info = a_day + "\n" + edit_one
             a_day_info.append(a_info)
@@ -113,26 +113,25 @@ def get_a_earlist_schedule(events_list):
                 continue
             elif count == 0:
                 break
+            else:
+                return Exception
+        elif hantei_list[0] not in a_day:
+            count -= 1
+            if count > 0:
+                continue
+            elif count == 0:
+                break
+            else:
+                return Exception
         else:
             return Exception
-    
-    elif hantei_list[0] not in a_day:
-        count -= 1
-        if count > 0:
-            continue
-        elif count == 0:
-            break
-        else:
-            return Exception
-    else:
-        return Exception
     
     if len(a_day_info) == 1:
         a_day_info = "\n".join(a_day_info)
-        print(a_day_info)
+        return a_day_info
     else:
         a_day_info = "\n\n".join(a_day_info)
-        print(a_day_info)
+        return a_day_info
 
 
 #    today = datetime.date.today()

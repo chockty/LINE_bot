@@ -74,13 +74,13 @@ def choice_a_day(keyword,events_list):
             a_info = a_day + "\n" + edit_one
             a_day_info.append(a_info)
             count += 1
-            if count == len(events_list.keys()):
+            if count == len(events_info.keys()):
                 break
             else:
                 continue
         elif selected_day not in a_day:
             count += 1
-            if count == len(events_list.keys()):
+            if count == len(events_info.keys()):
                 break
             else:
                 continue

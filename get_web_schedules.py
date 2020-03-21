@@ -87,6 +87,7 @@ def choice_a_day(keyword,events_list):
         else:
             return Exception
     if len(a_day_info) == 1:
+        a_day_info = "\n".join(a_day_info)
         return a_day_info
     else:
         a_day_info = "\n\n".join(a_day_info)

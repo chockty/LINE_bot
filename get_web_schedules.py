@@ -1,3 +1,8 @@
+#スケジュールを取得し条件の応じたメソッドを使用する
+#webページから取ってきたスケジュールを
+#①全表示させるためのメソッド
+#②日別/今日/一番最近　で指定して表示させるメソッド
+
 from bs4 import BeautifulSoup
 import requests
 import datetime
@@ -31,7 +36,6 @@ def get_a_schedule():
             href = a.attrs["href"]
             event_set += a.getText(),href
             event_list.append(event_set)
-#    event_list = dict(event_list)
     return event_list
     
 def choice_a_day(keyword,events_list):
@@ -140,35 +144,6 @@ def get_a_earlist_schedule(events_list):
     else:
         a_day_info = "\n\n".join(a_day_info)
         return a_day_info
-
-
-#    today = datetime.date.today()
-#    today = str(today.year) + "/" + str(today.month) + "/" + str(today.day)
-#    count = 0
-#    a_day_info = []
-#    for num in range(len(events_list)):
-#        if today in events_list[num][0][1]:
-#            count += 1
-#            if count >= len(events_list):
-#                break
-#            else:
-#                continue
-#        else:
-#            for a_day in events_list:
-#                if a_day[0][1] == events_list[num][0][1]:
-#                    a_day_info.append(events_list[num])
-#                    count += 1
-#                    if count == len(events_list):
-#                        break
-#                    else:
-#                        continue
-#    if len(a_day_info) == 1:
-#        return a_day_info
-#    else:
-#        a_day_info = "\n\n".join(a_day_info)
-#        return a_day_info
-#    a_earlist_one = events_list[0][0].replace("\n", "") + "\n" +events_list[0][1]
-#    return a_earlist_one
 
 def get_today_event(events_list):
     today = datetime.date.today()

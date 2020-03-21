@@ -12,7 +12,7 @@ SECRETTOKEN = os.environ["S_RTOKEN"]
 #全角→半角のテーブル
 henkan_table = str.maketrans({"１":"1","２":"2","３":"3","４":"4","５":"5","６":"6","７":"7","８":"8","９":"9","０":"0"})
 
-#tweepyの認証,ツイート取得
+#tweepyの認証,入力されたメッセージをキーにスケジュールツイート取得
 def get_API_tweet(keyword):
     auth = tweepy.OAuthHandler(CONSUMERKEY, SECRETKEY)
     auth.set_access_token(ACCESSTOKEN,SECRETTOKEN)

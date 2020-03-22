@@ -75,7 +75,7 @@ def handle_message(event):
         line_bot_api.reply_message(
             event.reply_token,TextSendMessage(text=event_info))
 
-    elif "カレンダー" in key_word and "入れておいて" in key_word:
+    elif "カレンダー" in key_word or "入れておいて" in key_word:
         profile = event.source.user_id
         line_bot_api.push_message(
                 profile,TextSendMessage(text="しばし待ちを"))

@@ -75,6 +75,21 @@ def handle_message(event):
         line_bot_api.reply_message(
             event.reply_token,TextSendMessage(text=event_info))
 
+    elif "カレンダー" in key_word and "入れておいて" in key_word:
+        profile = event.source.user_id
+        line_bot_api.push_message(
+                profile,TextSendMessage(text="しばし待ちを"))
+        try:
+            auth_caledar = wcr.calendar_user_auth()
+            get_calendar = wcr.get_calendar_events(auth_caledar)
+            event_info = gwc.get_edit_sch_info()
+            wcd.write_calendar_details(get_calendar,event_info,auth_caledar)
+            line_bot_api.reply_message(
+                event.reply_token,TextSendMessage(text="入力したで。"))
+        except KeyError as key:
+            line_bot_api.reply_message(
+                event.reply_token,TextSendMessage(text="なんか無理やったわ"))
+            
     elif "月" in key_word and "日" in key_word:
         profile = event.source.user_id
         line_bot_api.push_message(
@@ -136,7 +151,7 @@ def handle_message(event):
             get_sch = gst.edit_sch(get_tweet)
             auth_caledar = wcr.calendar_user_auth()
             get_calendar = wcr.get_calendar_events(auth_caledar)
-            write = wcr.hantei_wtite(get_calendar,get_sch.edited_Sch_list)
+            write = wcr.hantei_wtite(get_calendar,get_sch.edited_Sch_list,auth_caledar)
             line_bot_api.push_message(
                 profile,TextSendMessage(text=get_tweet))
             if len(get_sch.except_list) == 0:

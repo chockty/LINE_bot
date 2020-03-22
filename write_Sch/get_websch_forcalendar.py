@@ -6,8 +6,10 @@ import datetime
 #★必要なデータを取り込み用に処理
 Remove_list = ["(Mon)","(Tue)","(Wed)","(Thu)","(Fri)","(Sat)","(Sun)","（Mon）","（Tue）","（Wed）","（Thu）","（Fri）","（Sat）","（Sun）"]
 
-def edit_sch_info(i):
-    text = i.get_text()
+def get_edit_sch_info():
+    html = requests.get("https://toricago.info/schedule/")
+    soup = BeautifulSoup(html.text, "lxml")
+    text = soup.get_text()
     text = text.split("FUTURE")
     i = text[1].split("ACT")
     for num in range(0,len(i)):

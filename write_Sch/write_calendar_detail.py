@@ -2,9 +2,7 @@
 #まずはDICTにデータが入っているか確認。入って無い場合は書き込み。
 from write_Sch import write_calendar as wc
 
-service = wc.calendar_user_auth()
-
-def write_calendar_details(DICT,edited_info):
+def write_calendar_details(DICT,edited_info,service):
     Num = 0
     for DATE in edited_info.keys():
         if not DICT:

@@ -39,7 +39,7 @@ def get_calendar_events(service):
     return DICT
 
 #カレンダーのイベントを参照してスケジュールを入力するかどうかを条件分岐させる
-def hantei_wtite(DICT,edited_Sch_list):
+def hantei_wtite(DICT,edited_Sch_list,service):
     Num = 0
     #判定用のファイルをkey取得でループ処理
     #まずはDICTにデータが入っているか確認。入って無い場合は書き込み。

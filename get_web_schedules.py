@@ -12,7 +12,7 @@ henkan_table = str.maketrans({"１":"1","２":"2","３":"3","４":"4","５":"5",
 
 def get_schedules():
     event_list = []
-    html = requests.get("https://toricago.info/schedule/")
+    html = requests.get("URL")
     soup = BeautifulSoup(html.text, "lxml")
     get_schedule = soup.find_all("ul",{"class":"sideRecList1"})
 
@@ -26,7 +26,7 @@ def get_schedules():
 
 def get_a_schedule():
     event_list = []
-    html = requests.get("https://toricago.info/schedule/")
+    html = requests.get("URL")
     soup = BeautifulSoup(html.text, "lxml")
     get_schedule = soup.find_all("ul",{"class":"sideRecList1"})
 

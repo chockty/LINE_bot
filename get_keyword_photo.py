@@ -12,7 +12,7 @@ import json
 
 SCOPES = "https://www.googleapis.com/auth/photoslibrary"
 
-CLIENT_SECRET_FILE_PATH = "client_id(3)_Pht.json"
+CLIENT_SECRET_FILE_PATH = os.environ["CLIENT_SECRET"]
 
 USER_SECRET_FILE_PATH = os.environ["CREDIT"]
 
